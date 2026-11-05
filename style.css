@@ -1,0 +1,1243 @@
+/* ==========================================
+   BIG BROTHER — NOMINATION GAME
+   Clean, responsive stylesheet
+   ========================================== */
+
+/* 1. Base page and main game shell */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 10px 8px;
+    background: #171923;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.game {
+    width: min(1500px, 100%);
+    margin: 0 auto;
+    padding: 12px;
+    background: #292d3e;
+    border-radius: 15px;
+}
+
+/* 2. Controls and buttons */
+select,
+button {
+    padding: 6px 8px;
+    margin: 4px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+button {
+    background: #d4af37;
+    border: none;
+    color: #171923;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    filter: brightness(1.08);
+}
+
+/* 3. Houseguest cards */
+.houseguest-section {
+    width: 100%;
+    margin-bottom: 22px;
+}
+
+#playerStatuses {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+    gap: 8px;
+    width: 100%;
+    margin: 14px 0;
+    padding: 0;
+    list-style: none;
+}
+
+#playerStatuses li.player-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    padding: 7px 4px;
+    background: #222635;
+    border: 1px solid #41485f;
+    border-radius: 14px;
+    text-align: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+#playerStatuses li.player-card:hover {
+    transform: translateY(-3px);
+    background: #303548;
+}
+
+#playerStatuses .houseguest-photo {
+    display: block;
+    width: clamp(30px, 2.5vw, 40px);
+    height: clamp(30px, 2.5vw, 40px);
+    flex-shrink: 0;
+    object-fit: cover;
+    border: 3px solid #d8b339;
+    border-radius: 50%;
+}
+
+#playerStatuses .houseguest-name {
+    font-size: clamp(10px, 0.8vw, 13px);
+    overflow-wrap: anywhere;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    margin-top: 0;
+    border-radius: 20px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+}
+
+.status-badge.safe {
+    background: #123d2b;
+    color: #45e69a;
+}
+
+.status-badge.nominated {
+    background: #512b30;
+    color: #ff8585;
+}
+
+.player-card.your-houseguest {
+    border: 2px solid #e0b72f;
+    box-shadow: 0 0 12px rgba(224, 183, 47, 0.7);
+    background: rgba(224, 183, 47, 0.08);
+}
+
+.player-card.nominated-player {
+    border: 2px solid #ff6b6b;
+    box-shadow: 0 0 12px rgba(255, 80, 80, 0.75);
+    background: rgba(255, 80, 80, 0.08);
+}
+
+.player-card.evicted-player {
+    opacity: 0.35;
+    filter: grayscale(100%);
+    box-shadow: none;
+    pointer-events: none;
+}
+
+.evicted {
+    background: #555 !important;
+    color: #ffffff !important;
+}
+
+/* 4. Main dashboard layout */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 10px;
+    width: 100%;
+    align-items: start;
+    margin-top: 10px;
+}
+
+.dashboard-side {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+.history-panel,
+.eviction-panel {
+    min-width: 0;
+    padding: 11px;
+    background: #202536;
+    border: 1px solid #414b65;
+    border-radius: 12px;
+}
+
+.history-panel h3,
+.eviction-panel h3,
+.nomination-tracker h3 {
+    margin: 0 0 9px;
+    color: #e2b934;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Main game history gets its own scroll area */
+.dashboard-grid > .history-panel {
+    min-height: 260px;
+    max-height: 440px;
+    overflow-y: auto;
+}
+
+/* Right-side panels stay compact */
+.dashboard-side > .history-panel,
+.dashboard-side > .eviction-panel {
+    width: 100%;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+}
+
+#result {
+    margin-top: 8px;
+    font-size: 13px;
+}
+
+#result h3 {
+    margin-top: 22px;
+    color: #e2bd35;
+}
+
+#houseEvents {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 180px;
+    padding: 8px;
+    overflow-y: auto;
+}
+
+/* 5. Nomination and public vote results */
+.tally-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 90%;
+    max-width: 500px;
+    margin: 18px auto;
+}
+
+.tally-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    background: #202536;
+    border: 1px solid #d9b52e;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 15px;
+}
+
+.tally-row strong {
+    color: #e2bd35;
+}
+
+.tally-row.final-nominee {
+    background: #493039;
+    border: 2px solid #ff7777;
+    box-shadow: 0 0 10px rgba(255, 80, 80, 0.25);
+}
+
+.tally-row.final-nominee strong,
+.tally-row.final-nominee span::after {
+    color: #ff8585;
+}
+
+.tally-row.final-nominee span::after {
+    content: "  ★ NOMINEE";
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* 6. Public popularity dashboard */
+.popularity-entry {
+    margin-bottom: 9px;
+}
+
+.popularity-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+    font-size: 11px;
+}
+
+.popularity-bar {
+    width: 100%;
+    height: 6px;
+    background: #30394f;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.popularity-fill {
+    height: 100%;
+    background: #e8b832;
+    border-radius: 20px;
+    transition: width 0.3s ease;
+}
+
+/* 7. Season nomination tracker */
+.nomination-tracker {
+    width: 100%;
+    margin-top: 10px;
+    padding: 11px;
+    background: #202638;
+    border: 1px solid #39445d;
+    border-radius: 12px;
+    color: #ffffff;
+    overflow-x: auto;
+}
+
+#nominationTracker {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.nomination-table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+    text-align: center;
+    color: #ffffff;
+    font-size: 11px;
+}
+
+.nomination-table th {
+    padding: 7px 6px;
+    background: #30394f;
+    color: #e5b82e;
+    border: 1px solid #46516a;
+}
+
+.nomination-table td {
+    padding: 6px;
+    border: 1px solid #39445d;
+}
+
+.nomination-table tbody tr:nth-child(even) {
+    background: #293248;
+}
+
+.nomination-table tbody tr:hover {
+    background: #35415c;
+}
+
+.nomination-table td:last-child {
+    color: #e5b82e;
+    font-weight: bold;
+}
+
+.nominees-row {
+    background: #30394f !important;
+    border-top: 2px solid #e5b82e;
+}
+
+.nominees-row td {
+    padding: 10px 8px;
+    color: #ff7777;
+    font-weight: bold;
+}
+
+.nominees-row td:first-child {
+    color: #e5b82e;
+    text-align: center;
+}
+
+.nomination-table .tracker-evicted,
+.nomination-table .tracker-evicted td,
+.nomination-table td.tracker-after-eviction {
+    background: #fa8177 !important;
+    color: #202638;
+}
+
+.nomination-table .tracker-evicted td:last-child {
+    color: #202638;
+    font-weight: bold;
+}
+
+/* 8. Final challenge history */
+.final-challenge-history {
+    background: transparent;
+    border: none;
+    border-top: 1px solid rgba(224, 183, 47, 0.45);
+    border-bottom: 1px solid rgba(224, 183, 47, 0.45);
+    border-radius: 0;
+    padding: 10px 8px;
+    margin: 8px 12px 16px;
+}
+
+.final-challenge-history h4 {
+    margin: 0 0 8px;
+    color: #e0b72f;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.final-challenge-history .tally-row {
+    margin: 0;
+    padding: 5px 4px;
+    background: transparent;
+    border: none;
+}
+
+.final-challenge-history .tally-row:last-child {
+    border-bottom: none;
+}
+
+/* 9. Diary room modal */
+.diary-room-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.85);
+}
+
+.diary-room-content {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    padding: 35px;
+    border: 2px solid #d6ad32;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #292d40, #171a27);
+    color: #ffffff;
+    text-align: center;
+    box-shadow: 0 0 35px rgba(214, 173, 50, 0.35);
+}
+
+.diary-room-content h2 {
+    margin-bottom: 25px;
+    color: #e4bd43;
+    letter-spacing: 2px;
+}
+
+.diary-room-content h3 {
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+.diary-room-section {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(214, 173, 50, 0.4);
+    border-radius: 10px;
+    text-align: left;
+}
+
+.diary-room-section h4 {
+    margin: 0 0 10px;
+    color: #e4bd43;
+}
+
+.diary-room-section p {
+    margin: 0;
+    color: #eeeeee;
+    line-height: 1.5;
+}
+
+.diary-room-close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    background: transparent;
+    color: #ffffff;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* 10. Visibility before the game starts */
+.houseguest-section,
+.dashboard-grid {
+    display: none;
+}
+
+/* 11. Responsive layouts */
+@media (max-width: 900px) {
+    body {
+        padding: 12px 8px;
+    }
+
+    .game {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-grid > .history-panel {
+        min-height: 280px;
+        max-height: 480px;
+    }
+}
+
+@media (max-width: 600px) {
+    .diary-room-content {
+        padding: 25px 18px;
+    }
+
+    #playerStatuses {
+        grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
+        gap: 8px;
+    }
+
+    .history-panel,
+    .eviction-panel,
+    .nomination-tracker {
+        padding: 14px;
+    }
+
+    .tally-row {
+        font-size: 13px;
+        padding: 9px 10px;
+    }
+}
+
+
+/* ==========================================
+   CONCEPT 2 — BALANCED DASHBOARD LAYOUT
+   ========================================== */
+
+.houseguest-section h3 {
+    font-size: 16px;
+    margin: 8px 0 10px;
+}
+
+#playerStatuses {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 8px;
+    margin: 10px 0 14px;
+}
+
+#playerStatuses li.player-card {
+    min-height: 128px;
+    padding: 8px 5px;
+    gap: 5px;
+}
+
+#playerStatuses .houseguest-photo {
+    width: 52px;
+    height: 52px;
+}
+
+#playerStatuses .houseguest-name {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-badge {
+    font-size: 10px;
+    padding: 4px 8px;
+}
+
+/* Four panels arranged as a balanced 2 x 2 dashboard */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    grid-template-areas:
+        "game-history eviction"
+        "events popularity";
+    align-items: stretch;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.dashboard-grid > .history-panel:has(#nominationHistory) {
+    grid-area: game-history;
+    min-height: 260px;
+    max-height: 360px;
+    overflow-y: auto;
+}
+
+.dashboard-grid > .eviction-panel {
+    grid-area: eviction;
+    min-height: 170px;
+    align-self: start;
+}
+
+.dashboard-grid > .history-panel:has(#houseEvents) {
+    grid-area: events;
+    min-height: 180px;
+    max-height: 230px;
+    overflow: hidden;
+}
+
+.dashboard-grid > .history-panel:has(#publicPopularity) {
+    grid-area: popularity;
+    min-height: 260px;
+    max-height: 360px;
+    overflow-y: auto;
+}
+
+#houseEvents {
+    max-height: 155px;
+    overflow-y: auto;
+    gap: 7px;
+    padding: 5px;
+    font-size: 13px;
+}
+
+.popularity-entry {
+    margin-bottom: 8px;
+}
+
+.popularity-info {
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.popularity-bar {
+    height: 6px;
+}
+
+/* Consistent compact panel typography */
+.history-panel,
+.eviction-panel {
+    padding: 12px;
+}
+
+.history-panel h3,
+.eviction-panel h3,
+.nomination-tracker h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.tally-list {
+    gap: 6px;
+    margin: 12px auto;
+}
+
+.tally-row {
+    font-size: 14px;
+    padding: 8px 11px;
+}
+
+.tally-row strong {
+    font-size: 14px;
+}
+
+#result {
+    font-size: 13px;
+}
+
+.nomination-tracker {
+    margin-top: 10px;
+}
+
+/* Tablet and mobile: stack panels in a readable order */
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "game-history"
+            "eviction"
+            "events"
+            "popularity";
+    }
+
+    .dashboard-grid > .history-panel:has(#nominationHistory),
+    .dashboard-grid > .history-panel:has(#houseEvents),
+    .dashboard-grid > .history-panel:has(#publicPopularity) {
+        max-height: 340px;
+    }
+}
+
+@media (max-width: 700px) {
+    #playerStatuses {
+        grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
+    }
+
+    #playerStatuses .houseguest-photo {
+        width: 48px;
+        height: 48px;
+    }
+
+    #playerStatuses li.player-card {
+        min-height: 120px;
+    }
+}
+
+
+/* ==========================================
+   DESKTOP FIT — SHOW MORE AT 100% ZOOM
+   ========================================== */
+
+@media (min-width: 901px) {
+    body {
+        padding: 5px;
+    }
+
+    .game {
+        width: 100%;
+        max-width: none;
+        padding: 8px;
+        border-radius: 10px;
+    }
+
+    .houseguest-section {
+        margin-bottom: 8px;
+    }
+
+    .houseguest-section h3 {
+        margin: 3px 0 6px;
+        font-size: 15px;
+    }
+
+    #playerStatuses {
+        grid-template-columns: repeat(10, minmax(0, 1fr));
+        gap: 6px;
+        margin: 6px 0 8px;
+    }
+
+    #playerStatuses li.player-card {
+        min-height: 104px;
+        padding: 5px 3px;
+        gap: 3px;
+        border-radius: 10px;
+    }
+
+    #playerStatuses .houseguest-photo {
+        width: 43px;
+        height: 43px;
+        border-width: 2px;
+    }
+
+    #playerStatuses .houseguest-name {
+        font-size: 12px;
+    }
+
+    .status-badge {
+        font-size: 9px;
+        padding: 3px 7px;
+    }
+
+    #playerStatuses button {
+        font-size: 10px;
+        padding: 5px 8px;
+        margin: 2px;
+    }
+
+    .dashboard-grid {
+        gap: 8px;
+        margin-top: 6px;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: start;
+    }
+
+    .history-panel,
+    .eviction-panel {
+        padding: 9px;
+        border-radius: 10px;
+    }
+
+    .history-panel h3,
+    .eviction-panel h3,
+    .nomination-tracker h3 {
+        font-size: 14px;
+        margin: 0 0 7px;
+    }
+
+    .dashboard-grid > .history-panel:has(#nominationHistory) {
+        min-height: 0;
+        height: 220px;
+        max-height: 220px;
+        overflow-y: auto;
+    }
+
+    .dashboard-grid > .eviction-panel {
+        min-height: 0;
+        height: 220px;
+        max-height: 220px;
+        overflow-y: auto;
+        align-self: stretch;
+    }
+
+    .dashboard-grid > .history-panel:has(#houseEvents) {
+        min-height: 0;
+        height: 155px;
+        max-height: 155px;
+        overflow-y: auto;
+    }
+
+    .dashboard-grid > .history-panel:has(#publicPopularity) {
+        min-height: 0;
+        height: 220px;
+        max-height: 220px;
+        overflow-y: auto;
+    }
+
+    #houseEvents {
+        max-height: 110px;
+        gap: 5px;
+        padding: 3px;
+        font-size: 12px;
+    }
+
+    .popularity-entry {
+        margin-bottom: 5px;
+    }
+
+    .popularity-info {
+        font-size: 11px;
+        margin-bottom: 3px;
+    }
+
+    .popularity-bar {
+        height: 5px;
+    }
+
+    .tally-list {
+        width: 96%;
+        gap: 4px;
+        margin: 7px auto;
+    }
+
+    .tally-row {
+        font-size: 12px;
+        padding: 5px 8px;
+    }
+
+    .tally-row strong {
+        font-size: 12px;
+    }
+
+    #result {
+        margin-top: 4px;
+        font-size: 12px;
+    }
+
+    #result h3 {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .nomination-tracker {
+        margin-top: 7px;
+        padding: 8px;
+    }
+
+    .nomination-table {
+        font-size: 10px;
+    }
+
+    .nomination-table th,
+    .nomination-table td {
+        padding: 4px;
+    }
+}
+
+/* On smaller screens, allow the page to flow naturally */
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .dashboard-grid > .history-panel:has(#nominationHistory),
+    .dashboard-grid > .eviction-panel,
+    .dashboard-grid > .history-panel:has(#houseEvents),
+    .dashboard-grid > .history-panel:has(#publicPopularity) {
+        height: auto;
+        max-height: 320px;
+    }
+}
+
+
+/* ==========================================
+   FINAL DASHBOARD ARRANGEMENT
+   Game History spans the full left side.
+   Eviction Room and House Events share the
+   upper-right row. Public Popularity sits below.
+   ========================================== */
+
+@media (min-width: 901px) {
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-areas:
+            "history eviction events"
+            "history popularity popularity";
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .dashboard-grid > .game-history-panel {
+        grid-area: history;
+        height: 390px;
+        min-height: 0;
+        max-height: 390px;
+        overflow-y: auto;
+    }
+
+    .dashboard-grid > .eviction-panel {
+        grid-area: eviction;
+        height: 190px;
+        min-height: 0;
+        max-height: 190px;
+        overflow-y: auto;
+    }
+
+    .dashboard-grid > .house-events-panel {
+        grid-area: events;
+        height: 190px;
+        min-height: 0;
+        max-height: 190px;
+        overflow-y: auto;
+    }
+
+    .dashboard-grid > .popularity-panel {
+        grid-area: popularity;
+        height: 192px;
+        min-height: 0;
+        max-height: 192px;
+        overflow-y: auto;
+    }
+
+    .dashboard-grid > .game-history-panel,
+    .dashboard-grid > .eviction-panel,
+    .dashboard-grid > .house-events-panel,
+    .dashboard-grid > .popularity-panel {
+        align-self: stretch;
+        margin: 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "history"
+            "eviction"
+            "events"
+            "popularity";
+    }
+
+    .dashboard-grid > .game-history-panel,
+    .dashboard-grid > .eviction-panel,
+    .dashboard-grid > .house-events-panel,
+    .dashboard-grid > .popularity-panel {
+        grid-area: auto;
+        height: auto;
+        max-height: 320px;
+        min-height: 0;
+    }
+}
+
+
+/* ==========================================
+   REPAIR: FINAL DASHBOARD PANEL POSITIONS
+   Use explicit grid coordinates to prevent
+   the panels from being auto-placed incorrectly.
+   ========================================== */
+
+@media (min-width: 901px) {
+    .dashboard-grid {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr) !important;
+        grid-template-rows: 190px 192px !important;
+        grid-template-areas: none !important;
+        gap: 8px !important;
+        align-items: stretch !important;
+    }
+
+    .dashboard-grid > .game-history-panel {
+        grid-area: auto !important;
+        grid-column: 1 !important;
+        grid-row: 1 / span 2 !important;
+        width: 100% !important;
+        height: 390px !important;
+        min-height: 0 !important;
+        max-height: 390px !important;
+        overflow-y: auto !important;
+    }
+
+    .dashboard-grid > .eviction-panel {
+        grid-area: auto !important;
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+        width: 100% !important;
+        height: 190px !important;
+        min-height: 0 !important;
+        max-height: 190px !important;
+        overflow-y: auto !important;
+    }
+
+    .dashboard-grid > .house-events-panel {
+        grid-area: auto !important;
+        grid-column: 3 !important;
+        grid-row: 1 !important;
+        width: 100% !important;
+        height: 190px !important;
+        min-height: 0 !important;
+        max-height: 190px !important;
+        overflow-y: auto !important;
+    }
+
+    .dashboard-grid > .popularity-panel {
+        grid-area: auto !important;
+        grid-column: 2 / span 2 !important;
+        grid-row: 2 !important;
+        width: 100% !important;
+        height: 192px !important;
+        min-height: 0 !important;
+        max-height: 192px !important;
+        overflow-y: auto !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .dashboard-grid {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        grid-template-rows: auto !important;
+        grid-template-areas: none !important;
+    }
+
+    .dashboard-grid > .game-history-panel,
+    .dashboard-grid > .eviction-panel,
+    .dashboard-grid > .house-events-panel,
+    .dashboard-grid > .popularity-panel {
+        grid-column: 1 !important;
+        grid-row: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        max-height: 320px !important;
+        min-height: 0 !important;
+    }
+}
+
+/* COMPACT EVICTION ROOM CONTENT */
+/* COMPACT EVICTION ROOM */
+.eviction-panel {
+    overflow-y: auto;
+    padding: 10px !important;
+}
+
+.eviction-panel h2 {
+    font-size: 15px !important;
+    margin: 5px 0 !important;
+    line-height: 1.2;
+}
+
+.eviction-panel h3 {
+    font-size: 13px !important;
+    margin: 5px 0 !important;
+}
+
+.eviction-panel p {
+    font-size: 12px !important;
+    margin: 4px 0 !important;
+}
+
+.eviction-panel button {
+    font-size: 12px !important;
+    padding: 6px 10px !important;
+    margin: 4px 0 !important;
+}
+
+.eviction-panel .tally-list {
+    gap: 4px !important;
+}
+
+.eviction-panel .tally-row {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 5px 8px !important;
+    margin: 3px 0 !important;
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+}
+
+.eviction-panel .tally-row span,
+.eviction-panel .tally-row strong {
+    white-space: nowrap !important;
+    font-size: 11px !important;
+}
+
+/* FINAL EVICTION ROOM FIT FIX */
+
+.eviction-panel #result {
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 1.15 !important;
+}
+
+.eviction-panel #result h2 {
+    font-size: 14px !important;
+    margin: 5px 0 !important;
+    line-height: 1.15 !important;
+}
+
+.eviction-panel #result h3 {
+    font-size: 12px !important;
+    margin: 4px 0 !important;
+    line-height: 1.15 !important;
+}
+
+.eviction-panel #result p {
+    font-size: 11px !important;
+    margin: 3px 0 !important;
+}
+
+.eviction-panel #result .tally-row {
+    padding: 4px 7px !important;
+    margin: 3px 0 !important;
+    min-height: 0 !important;
+}
+
+.eviction-panel #result button {
+    display: block;
+    font-size: 11px !important;
+    padding: 5px 9px !important;
+    margin: 5px auto !important;
+}
+
+/* EVICTION ROOM — FINAL SPACING ADJUSTMENT */
+
+.eviction-panel {
+    padding: 8px !important;
+}
+
+.eviction-panel > h3 {
+    font-size: 14px !important;
+    margin: 2px 0 4px !important;
+}
+
+.eviction-panel #result h2 {
+    font-size: 14px !important;
+    margin: 3px 0 !important;
+}
+
+.eviction-panel #result h3 {
+    font-size: 12px !important;
+    margin: 2px 0 !important;
+}
+
+.eviction-panel #result .tally-row {
+    padding: 3px 7px !important;
+    margin: 2px 0 !important;
+    line-height: 1.1 !important;
+}
+
+.eviction-panel #result button {
+    padding: 4px 9px !important;
+    margin: 2px auto !important;
+    font-size: 11px !important;
+    line-height: 1.1 !important;
+}
+
+/* HOUSE EVENTS — TIGHTER EVENT LIST */
+
+#houseEvents {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    padding: 5px 10px !important;
+}
+
+#houseEvents > * {
+    margin: 0 !important;
+    padding: 5px 0 !important;
+    line-height: 1.25 !important;
+    flex: 0 0 auto !important;
+}
+
+/* HOUSE EVENTS — FILL THE AVAILABLE SPACE */
+
+#houseEvents {
+    height: calc(100% - 45px) !important;
+    min-height: 180px;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-evenly !important;
+    gap: 0 !important;
+    box-sizing: border-box;
+}
+
+#houseEvents > * {
+    margin: 0 !important;
+    padding: 8px 0 !important;
+    flex: 0 0 auto !important;
+}
+
+#houseEvents > * {
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 6px 0 !important;
+}
+
+#houseEvents {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.winner-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    font-size: 24px;
+}
+
+/* HOUSE EVENTS — REMOVE DOUBLE SCROLLBAR */
+
+.dashboard-grid > .house-events-panel {
+    overflow: hidden !important;
+}
+
+#houseEvents {
+    min-height: 0 !important;
+    height: calc(100% - 45px) !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* SEASON TRACKER — PUBLIC EVICTION RESULTS */
+
+.eviction-results-row {
+    background: #30394f !important;
+    border-top: 2px solid #e5b82e;
+}
+
+.eviction-results-row td {
+    padding: 8px 5px !important;
+    color: #ffffff;
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+.eviction-results-row td:first-child {
+    color: #e5b82e;
+    font-weight: bold;
+}
+
+.eviction-results-row strong {
+    color: #ff8585;
+}
+

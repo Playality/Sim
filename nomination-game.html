@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Big Brother Nomination Game</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game">
+    <div id="gameSetup">
+    <h2>SET UP YOUR SEASON</h2>
+
+<p>Choose which game you want to play.</p>
+
+<select id="gameMode">
+    <option value="bigbrother">Big Brother</option>
+    <option value="survivor">Survivor</option>
+</select>
+
+<p>Choose your cast size.</p>
+
+    <select id="castSize">
+        <option value="6">6 Houseguests</option>
+        <option value="7">7 Houseguests</option>
+        <option value="8">8 Houseguests</option>
+        <option value="9">9 Houseguests</option>
+        <option value="10" selected>10 Houseguests</option>
+        <option value="11">11 Houseguests</option>
+        <option value="12">12 Houseguests</option>
+        <option value="13">13 Houseguests</option>
+        <option value="14">14 Houseguests</option>
+        <option value="15">15 Houseguests</option>
+        <option value="16">16 Houseguests</option>
+    </select>
+
+    <button onclick="startSelectedGame()">START GAME</button>
+</div>
+
+<div id="survivorScreen" style="display: none;">
+    <div id="survivorContent"></div>
+</div>
+    
+
+<div class="houseguest-section">
+    <h3>HOUSEGUESTS</h3>
+    <ul id="playerStatuses"></ul>
+    <select id="player" style="display: none;">
+    <option>Alex</option>
+    <option>Jordan</option>
+    <option>Taylor</option>
+    <option>Sam</option>
+    <option>Chris</option>
+    <option>Jamie</option>
+    <option>Morgan</option>
+    <option>Riley</option>
+    <option>Casey</option>
+    <option>Charlie</option>
+    <option>Cian</option>
+    <option>Daniel</option>
+    <option>Hussain</option>
+    <option>Isabella</option>
+    <option>Luke</option>
+    <option>Nikki</option>
+</select>
+
+</div>
+
+<div id="diaryRoomModal" class="diary-room-modal" style="display: none;">
+    <div class="diary-room-content">
+        <button class="diary-room-close" onclick="closeDiaryRoom()">✕</button>
+
+        <h2>🎙️ THE DIARY ROOM</h2>
+
+        <h3 id="diaryGuestName">HOUSEGUEST</h3>
+
+        <div class="diary-room-section">
+            <h4>💭 PRIVATE THOUGHTS</h4>
+            <p id="diaryThoughts">Waiting for houseguest...</p>
+        </div>
+
+        <div class="diary-room-section">
+            <h4>🤝 ALLIANCES & RELATIONSHIPS</h4>
+            <p id="diaryRelationships"></p>
+        </div>
+
+        <div class="diary-room-section">
+            <h4>🎯 CURRENT TARGET</h4>
+            <p id="diaryTarget"></p>
+        </div>
+
+        <div class="diary-room-section">
+            <h4>📊 POPULARITY</h4>
+            <p id="diaryPopularity">Popularity will be introduced later.</p>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-grid">
+
+    <div class="history-panel game-history-panel">
+        <h3>GAME HISTORY</h3>
+        <div id="nominationHistory">
+            <p>No nomination history yet.</p>
+        </div>
+    </div>
+
+    <div class="eviction-panel">
+        <h3>EVICTION ROOM</h3>
+        <p id="nominationCounter" style="display: none;">Houseguests nominated: 0 / 10</p>
+        <p id="ceremonyStatus" style="display: none;">The ceremony is in progress.</p>
+        <div id="result">No nominations yet.</div>
+    </div>
+
+    <div class="history-panel house-events-panel">
+        <h3>HOUSE EVENTS</h3>
+        <div id="houseEvents"></div>
+    </div>
+
+    <div class="history-panel popularity-panel">
+        <h3>⭐ PUBLIC POPULARITY</h3>
+        <div id="publicPopularity">
+            <p>Popularity rankings will appear here.</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- SEASON NOMINATION TRACKER -->
+<div class="nomination-tracker">
+    <h3>SEASON NOMINATION TRACKER</h3>
+    <div id="nominationTracker">
+        <p>Nomination statistics will appear here.</p>
+    </div>
+</div>
+
+<select id="player" style="display: none;">
+    <option>Alex</option>
+    <option>Jordan</option>
+    <option>Taylor</option>
+    <option>Sam</option>
+    <option>Chris</option>
+    <option>Jamie</option>
+    <option>Morgan</option>
+    <option>Riley</option>
+    <option>Casey</option>
+    <option>Charlie</option>
+    <option>Cian</option>
+    <option>Daniel</option>
+    <option>Hussain</option>
+    <option>Isabella</option>
+    <option>Luke</option>
+    <option>Nikki</option>
+</select>
+
+  </div>
+
+  <script src="script.js"></script>
+  <script src="survivor.js"></script>
+  
+</body>
+</html>
